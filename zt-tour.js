@@ -19,6 +19,20 @@
     constructor(options, templates) {
       this.initializeOptions(options);
       this.initializeTemplate(templates);
+
+      this.popup = null;
+      this.overlaySvg = null;
+      this.currentStep = 0;
+      this.activeStagePosition = null;
+
+      this.onKeyUp = this.onKeyUp.bind(this);
+      this.refreshStep = this.refreshStep.bind(this);
+
+      this.initEvents();
+
+      this.onNextClick = options.onNextClick || null;
+      this.onClose = options.onClose || null;
+      this.onPreviousClick = options.onPreviousClick || null;
     }
 
     // initialize Options
@@ -35,7 +49,7 @@
         overlayColor: opt.overlayColor || "#000",
         animate: opt.animate || false,
         smoothScroll: opt.smoothScroll || false,
-        showButtons: opt.showButtons || [],
+        visibleButtons: opt.visibleButtons || ["next", "previous", "close"],
         disableButtons: opt.disableButtons || [],
         showProgress: opt.showProgress || false,
         nextBtnText: opt.nextBtnText || "Next &rarr;",
@@ -53,35 +67,40 @@
       }
       this.templates = {
         progressText:
-          templ.progressText ||
-          function (current, total) {
-            return `${current} of ${total}`;
-          },
+          templ.progressText || ((current, total) => `${current} of ${total}`),
       };
     }
 
-    initEvents(e) {
+    initEvents() {
+      window.addEventListener("keyup", this.onKeyUp, false);
+      window.addEventListener("resize", this.refreshStep, false);
+      window.addEventListener("scroll", this.refreshStep, false);
+    }
+
+    onKeyUp(e) {
       const keyboardControl = this.getOption("keyboardControl");
       if (keyboardControl) {
         if (e.key === "Escape") {
           this.destroyTour();
         } else if (e.key === "ArrowRight") {
-          this.changeStep(this.getOption("currentStep")+1);
+          this.changeStep(this.getOption("currentStep") + 1);
         } else if (e.key === "ArrowLeft") {
-          this.changeStep(this.getOption("currentStep")-1);
+          this.changeStep(this.getOption("currentStep") - 1);
         }
       }
     }
 
     destroyEvents() {
-      window.removeEventListener("keyup", this.initEvents);
+      window.removeEventListener("keyup", this.onKeyUp);
+      window.removeEventListener("resize", this.refreshStep);
+      window.removeEventListener("scroll", this.refreshStep);
     }
 
     getOption(key) {
       if (!key) {
         return this.options;
       }
-      return this.options[key] ? this.options[key] : null;
+      return this.options[key];
     }
 
     setOption(key, val) {
@@ -108,11 +127,13 @@
         width,
         height,
       });
-      let that = this;
-      window.addEventListener("keyup", that.initEvents, false);
     }
 
     changeStep(currentStep) {
+      if (0 > currentStep || currentStep > this.getOption("steps").length - 1) {
+        this.destroyTour();
+      }
+
       let step = this.options.steps[currentStep];
       let element = document.querySelector(step.element);
 
@@ -200,12 +221,19 @@
       let popup = this.createPopup();
       this.options.popup = popup;
 
+      let oldPopups = document.querySelectorAll(".zt-tour-popup");
+
+      // remove all old popups
+      Array.from(oldPopups).forEach((ele) => {
+        ele.remove();
+      });
+
       document.body.appendChild(popup.wrapper);
 
       let {
         title,
         description,
-        showButtons,
+        visibleButtons,
         disableButtons,
         showProgress,
         nextBtnText = this.options.nextBtnText,
@@ -242,16 +270,68 @@
         popup.description.style.display = "none";
       }
 
+      const showButtonsOption =
+        visibleButtons || this.getOption("visibleButtons");
+      const isShowProgress = showProgress || this.getOption("showProgress");
+
+      const isShowFooter =
+        showButtonsOption.includes("next") ||
+        showButtonsOption?.includes("previous") ||
+        isShowProgress;
+
+      popup.closeButton.style.display = showButtonsOption.includes("close")
+        ? "block"
+        : "none";
+
+      if (isShowFooter) {
+        popup.footer.style.display = "flex";
+
+        popup.progress.style.display = isShowProgress ? "block" : "none";
+        popup.nextButton.style.display = showButtonsOption.includes("next")
+          ? "block"
+          : "none";
+        popup.previousButton.style.display = showButtonsOption.includes(
+          "previous"
+        )
+          ? "block"
+          : "none";
+      } else {
+        popup.footer.style.display = "none";
+      }
+
+      const disabledButtonsOption =
+        disableButtons || this.getOption("disableButtons");
+      if (disabledButtonsOption?.includes("next")) {
+        popup.nextButton.disabled = true;
+      }
+
+      if (disabledButtonsOption?.includes("previous")) {
+        popup.previousButton.disabled = true;
+      }
+
+      if (disabledButtonsOption?.includes("close")) {
+        popup.closeButton.disabled = true;
+      }
+
       popup.nextButton.addEventListener("click", () => {
         this.changeStep(this.options.currentStep + 1);
+        if (typeof this.onNextClick === 'function') {
+          this.onNextClick(this.options.currentStep);
+        }
       });
 
       popup.previousButton.addEventListener("click", () => {
         this.changeStep(this.options.currentStep - 1);
+        if (typeof this.onPreviousClick === 'function') {
+          this.onPreviousClick(this.options.currentStep);
+        }
       });
 
       popup.closeButton.addEventListener("click", () => {
         this.destroyTour();
+        if (typeof this.onClose === 'function') {
+          this.onClose();
+        }
       });
 
       this.repositionPopup(element, step);
@@ -416,6 +496,9 @@
       svg.addEventListener("click", () => {
         if (this.getOption("allowBackdropClose")) {
           this.destroyTour();
+          if (typeof this.onClose === 'function') {
+            this.onClose();
+          }
         }
       });
 
@@ -902,10 +985,37 @@
         (-amountOfChange / 2) * (--timeDiff * (timeDiff - 2) - 1) + initialValue
       );
     }
+
+    refreshOverlay() {
+      const activeStagePosition = this.getOption("activeStagePosition");
+      const overlaySvg = this.getOption("overlaySvg");
+
+      if (!activeStagePosition) {
+        return;
+      }
+
+      if (!overlaySvg) {
+        console.warn("No svg found.");
+        return;
+      }
+
+      const windowX = window.innerWidth;
+      const windowY = window.innerHeight;
+
+      overlaySvg.setAttribute("viewBox", `0 0 ${windowX} ${windowY}`);
+    }
+
+    refreshStep() {
+      const currentStep = this.getOption("currentStep");
+      const step = this.getOption("steps")[currentStep];
+      const element = document.querySelector(step.element);
+      this.trackActiveElement(element);
+      this.refreshOverlay();
+      this.repositionPopup(element, step);
+    }
     //
   }
 
   global.ztTour = ztTour;
 })(this);
 
-// box-shadow: rgba(33, 33, 33, 0.8) 0px 0px 1px 2px, rgba(33, 33, 33, 0.5) 0px 0px 0px 5000px;

@@ -93,6 +93,11 @@
   border-radius: 3px;
 }
 
+.zt-tour-popup-footer button:disabled{
+  opacity: .5;
+  pointer-events: none;
+}
+
 .zt-tour-popup-footer .zt-tour-popup-btn-disabled {
   opacity: 0.5;
   pointer-events: none;
