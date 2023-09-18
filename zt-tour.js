@@ -58,6 +58,7 @@
         allowBackdropClose: opt.allowBackdropClose === true,
         popupClass: opt.popupClass || false,
         keyboardControl: opt.keyboardControl === true,
+        animationDuration: opt.animationDuration || 400,
       };
     }
 
@@ -862,7 +863,8 @@
     }
 
     changeHighlight(toElement, toStep, toStepIndex) {
-      const duration = 400;
+      const duration = this.getOption('animationDuration');
+      console.log(duration,"duration");
       const start = Date.now();
 
       const fromElement =

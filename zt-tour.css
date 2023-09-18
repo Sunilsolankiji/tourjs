@@ -7,18 +7,22 @@
 .zt-tour-popup-close-btn {
   all: unset;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 5px;
+  right: 5px;
   width: 32px;
   height: 28px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 500;
-  color: #d2d2d2;
-  z-index: 1;
+  color: #4e4d4d;
   text-align: center;
   transition: color;
-  transition-duration: 0.2s;
+  transition-duration: 0.3s;
+  z-index: 1;
+}
+
+.zt-tour-popup-close-btn:hover {
+  color: #000;
 }
 
 .zt-tour-popup {
@@ -71,26 +75,21 @@
   justify-content: flex-end;
 }
 
-.zt-tour-popup-navigation-btns button:not(:first-child){
-    margin-left: 10px;
+.zt-tour-popup-footer button {
+  font: 12px;
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #4ca0fff2;
+  color: #fff;
+  border-radius: 3px;
+  border: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-left: 10px;
 }
 
-.zt-tour-popup-footer button {
-  all: unset;
-  display: inline-block;
-  box-sizing: border-box;
-  padding: 3px 7px;
-  text-decoration: none;
-  text-shadow: 1px 1px 0 #fff;
-  background-color: #fff;
-  color: #2d2d2d;
-  font: 12px / normal sans-serif;
-  cursor: pointer;
-  outline: 0;
-  zoom: 1;
-  line-height: 1.3;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+.zt-tour-popup-footer button:hover {
+  background-color: #3585e0f2;
 }
 
 .zt-tour-popup-footer button:disabled{
