@@ -84,9 +84,9 @@
         if (e.key === "Escape") {
           this.destroyTour();
         } else if (e.key === "ArrowRight") {
-          this.changeStep(this.getOption("currentStep") + 1);
+          this.highlightStep(this.getOption("currentStep") + 1);
         } else if (e.key === "ArrowLeft") {
-          this.changeStep(this.getOption("currentStep") - 1);
+          this.highlightStep(this.getOption("currentStep") - 1);
         }
       }
     }
@@ -113,24 +113,10 @@
     }
 
     start() {
-      this.options.currentStep = 0;
-      let element = document.querySelector(this.options.steps[0].element);
-
-      let x = element.offsetLeft;
-      let y = element.offsetTop;
-      let width = element.offsetWidth;
-      let height = element.offsetHeight;
-
-      this.renderPopup(element, this.options.steps[0]);
-      this.mountOverlay({
-        x,
-        y,
-        width,
-        height,
-      });
+      this.highlightStep(0);
     }
 
-    changeStep(currentStep) {
+    highlightStep(currentStep) {
       if (0 > currentStep || currentStep > this.getOption("steps").length - 1) {
         this.destroyTour();
       }
@@ -139,7 +125,7 @@
       let element = document.querySelector(step.element);
 
       if (!element) {
-        this.throwError("unable to get element " + step.element);
+        element = this.addDummyElement();
       }
 
       this.changeHighlight(element, step, currentStep);
@@ -315,22 +301,22 @@
       }
 
       popup.nextButton.addEventListener("click", () => {
-        this.changeStep(this.options.currentStep + 1);
-        if (typeof this.onNextClick === 'function') {
+        this.highlightStep(this.options.currentStep + 1);
+        if (typeof this.onNextClick === "function") {
           this.onNextClick(this.options.currentStep);
         }
       });
 
       popup.previousButton.addEventListener("click", () => {
-        this.changeStep(this.options.currentStep - 1);
-        if (typeof this.onPreviousClick === 'function') {
+        this.highlightStep(this.options.currentStep - 1);
+        if (typeof this.onPreviousClick === "function") {
           this.onPreviousClick(this.options.currentStep);
         }
       });
 
       popup.closeButton.addEventListener("click", () => {
         this.destroyTour();
-        if (typeof this.onClose === 'function') {
+        if (typeof this.onClose === "function") {
           this.onClose();
         }
       });
@@ -497,7 +483,7 @@
       svg.addEventListener("click", () => {
         if (this.getOption("allowBackdropClose")) {
           this.destroyTour();
-          if (typeof this.onClose === 'function') {
+          if (typeof this.onClose === "function") {
             this.onClose();
           }
         }
@@ -540,7 +526,10 @@
 
     repositionPopup(element, step) {
       const popup = this.options.popup;
-      const { align = "start", side = "left" } = step?.popup || {};
+      let { align = "start", side = "left" } = step?.popup || {};
+
+      align = step.element ? align : 'over';
+      side = step.element ? side : 'over';
 
       // Configure the popup positioning
       const requiredAlignment = align;
@@ -795,8 +784,17 @@
 
     destroyTour() {
       let popup = this.options.popup;
-      popup.wrapper.remove();
-      document.querySelector(".zt-tour-overlay").remove();
+      const overlaySvg = document.querySelector(".zt-tour-overlay");
+
+      if (popup.wrapper) {
+        popup.wrapper.remove();
+      }
+      if (overlaySvg) {
+        overlaySvg.remove();
+      }
+
+      this.options.activeStagePosition = null;
+      this.options.overlaySvg = null;
       this.destroyEvents();
     }
 
@@ -847,7 +845,7 @@
     renderOverlay(stagePosition) {
       const overlaySvg = this.getOption("overlaySvg");
       if (!overlaySvg) {
-        this.mountOverlay(stagePosition);
+        this.addOverlay(stagePosition);
         return;
       }
 
@@ -863,14 +861,12 @@
     }
 
     changeHighlight(toElement, toStep, toStepIndex) {
-      const duration = this.getOption('animationDuration');
-      console.log(duration,"duration");
+      const duration = this.getOption("animationDuration");
+      let currentStepEle = this.options.steps[this.options.currentStep]?.element
+
       const start = Date.now();
 
-      const fromElement =
-        document.querySelector(
-          this.options.steps[this.options.currentStep].element
-        ) || toElement;
+      const fromElement = currentStepEle ? document.querySelector(currentStepEle) : toElement;
 
       const isFirstHighlight = !fromElement || fromElement === toElement;
 
@@ -972,7 +968,7 @@
       this.renderOverlay(activeStagePosition);
     }
 
-    mountOverlay(stagePosition) {
+    addOverlay(stagePosition) {
       const overlaySvg = this.createOverlaySvg(stagePosition);
       document.body.appendChild(overlaySvg);
 
@@ -1015,9 +1011,30 @@
       this.refreshOverlay();
       this.repositionPopup(element, step);
     }
+
+    addDummyElement() {
+      const isDummyElement = document.getElementById("zt-popup-dummy-element");
+      if (isDummyElement) {
+        return isDummyElement;
+      }
+
+      let element = document.createElement("div");
+
+      element.id = "zt-popup-dummy-element";
+      element.style.width = "0";
+      element.style.height = "0";
+      element.style.pointerEvents = "none";
+      element.style.opacity = "0";
+      element.style.position = "fixed";
+      element.style.top = "50%";
+      element.style.left = "50%";
+
+      document.body.appendChild(element);
+
+      return element;
+    }
     //
   }
 
   global.ztTour = ztTour;
 })(this);
-
