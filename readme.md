@@ -1,8 +1,8 @@
-# ztGantt Chart Library Documentation  
+# Tourjs Library Documentation  
   
 
 ## Introduction  
-The zt-tour JavaScript library empowers developers to craft engaging website tours and walkthroughs for users. These tours serve as valuable tools to user newcomers through a website's features and functionalities, be it a web application or any online platform. With zt-tour, creating interactive and user-friendly guides becomes a breeze, allowing you to effortlessly highlight and elucidate different elements on a web page, thereby enhancing the user's comprehension and navigation of the interface.   
+The tourjs JavaScript library empowers developers to craft engaging website tours and walkthroughs for users. These tours serve as valuable tools to user newcomers through a website's features and functionalities, be it a web application or any online platform. With tourjs, creating interactive and user-friendly guides becomes a breeze, allowing you to effortlessly highlight and elucidate different elements on a web page, thereby enhancing the user's comprehension and navigation of the interface.   
   
 
 ## Table of Contents 
@@ -18,7 +18,7 @@ The zt-tour JavaScript library empowers developers to craft engaging website tou
 To use the Tour Library in your project, follow these steps:   
   
   1. Download the library files from our website or repository.  
-  2. Include the library files (zt-tour.js and zt-tour.css) in your project  
+  2. Include the library files (tourjs.js and tourjs.css) in your project  
   3. Link the library files in your HTML file.   
   4. You're now ready to start using the Tour Library!        
   
@@ -155,7 +155,7 @@ ztTour.start();
             { 
               element: "#ZT-Gantt", 
               popup: { 
-                title: "ztGantt Chart", 
+                title: "tourjs", 
                 description: "Gantt Chart", 
                 side: "top", 
                 align: "start", 
