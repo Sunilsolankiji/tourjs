@@ -1,6 +1,23 @@
 import js from "@eslint/js";
 
 export default [
+  // Ignore files
+  {
+    ignores: [
+      "node_modules/",
+      "dist/",
+      "build/",
+      "coverage/",
+      ".nyc_output/",
+      "docs/",
+      "*.tgz",
+      ".git/",
+      ".idea/",
+      ".vscode/",
+      "package-lock.json"
+    ]
+  },
+  // Lint configuration
   {
     files: ["src/**/*.js"],
     languageOptions: {
@@ -10,7 +27,8 @@ export default [
         window: "readonly",
         document: "readonly",
         console: "readonly",
-        global: "readonly"
+        global: "readonly",
+        structuredClone: "readonly"
       }
     },
     rules: {
