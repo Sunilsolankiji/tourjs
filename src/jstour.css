@@ -1,4 +1,4 @@
-.tourjs-popup * {
+.jstour-popup * {
   font-family:
     Helvetica Neue,
     Inter,
@@ -10,7 +10,7 @@
   color: #000;
 }
 
-.tourjs-popup {
+.jstour-popup {
   all: unset;
   box-sizing: border-box;
   color: #2d2d2d;
@@ -26,7 +26,7 @@
   background-color: #fff;
 }
 
-.tourjs-popup-close-btn {
+.jstour-popup-close-btn {
   all: unset;
   position: absolute;
   top: 5px;
@@ -43,18 +43,18 @@
   z-index: 1;
 }
 
-.tourjs-popup-close-btn:hover {
+.jstour-popup-close-btn:hover {
   color: #000;
 }
 
-.tourjs-popup-description {
+.jstour-popup-description {
   margin-bottom: 0;
   font-size: 14px;
   font-weight: 400;
   padding: 5px;
 }
 
-.tourjs-popup-footer {
+.jstour-popup-footer {
   margin-top: 15px;
   text-align: right;
   zoom: 1;
@@ -64,13 +64,13 @@
   padding: 10px;
 }
 
-.tourjs-popup-navigation-btns {
+.jstour-popup-navigation-btns {
   display: flex;
   flex-grow: 1;
   justify-content: flex-end;
 }
 
-.tourjs-popup-footer button {
+.jstour-popup-footer button {
   font-size: 12px;
   cursor: pointer;
   padding: 10px 20px;
@@ -83,95 +83,95 @@
   margin-left: 10px;
 }
 
-.tourjs-popup-footer button:hover {
+.jstour-popup-footer button:hover {
   background-color: #3585e0f2;
 }
 
-.tourjs-popup-footer button:disabled {
+.jstour-popup-footer button:disabled {
   opacity: 0.5;
   pointer-events: none;
 }
 
-.tourjs-popup-footer .tourjs-popup-btn-disabled {
+.jstour-popup-footer .jstour-popup-btn-disabled {
   opacity: 0.5;
   pointer-events: none;
 }
 
-.tourjs-popup-arrow {
+.jstour-popup-arrow {
   content: '';
   position: absolute;
   border: 5px solid #408be1;
 }
 
-.tourjs-popup-arrow-side-left {
+.jstour-popup-arrow-side-left {
   left: 100%;
   border-right-color: transparent;
   border-bottom-color: transparent;
   border-top-color: transparent;
 }
 
-.tourjs-popup-arrow-side-right {
+.jstour-popup-arrow-side-right {
   right: 100%;
   border-left-color: transparent;
   border-bottom-color: transparent;
   border-top-color: transparent;
 }
 
-.tourjs-popup-arrow-side-top {
+.jstour-popup-arrow-side-top {
   top: 100%;
   border-right-color: transparent;
   border-bottom-color: transparent;
   border-left-color: transparent;
 }
 
-.tourjs-popup-arrow-side-bottom {
+.jstour-popup-arrow-side-bottom {
   bottom: 100%;
   border-left-color: transparent;
   border-top-color: transparent;
   border-right-color: transparent;
 }
 
-.tourjs-popup-arrow-side-left.tourjs-popup-arrow-align-start,
-.tourjs-popup-arrow-side-right.tourjs-popup-arrow-align-start {
+.jstour-popup-arrow-side-left.jstour-popup-arrow-align-start,
+.jstour-popup-arrow-side-right.jstour-popup-arrow-align-start {
   top: 15px;
 }
 
-.tourjs-popup-arrow-side-bottom.tourjs-popup-arrow-align-start,
-.tourjs-popup-arrow-side-top.tourjs-popup-arrow-align-start {
+.jstour-popup-arrow-side-bottom.jstour-popup-arrow-align-start,
+.jstour-popup-arrow-side-top.jstour-popup-arrow-align-start {
   left: 15px;
 }
 
-.tourjs-popup-arrow-align-end.tourjs-popup-arrow-side-left,
-.tourjs-popup-arrow-align-end.tourjs-popup-arrow-side-right {
+.jstour-popup-arrow-align-end.jstour-popup-arrow-side-left,
+.jstour-popup-arrow-align-end.jstour-popup-arrow-side-right {
   bottom: 15px;
 }
 
-.tourjs-popup-arrow-side-bottom.tourjs-popup-arrow-align-end,
-.tourjs-popup-arrow-side-top.tourjs-popup-arrow-align-end {
+.jstour-popup-arrow-side-bottom.jstour-popup-arrow-align-end,
+.jstour-popup-arrow-side-top.jstour-popup-arrow-align-end {
   right: 15px;
 }
 
-.tourjs-popup-arrow-side-left.tourjs-popup-arrow-align-center,
-.tourjs-popup-arrow-side-right.tourjs-popup-arrow-align-center {
+.jstour-popup-arrow-side-left.jstour-popup-arrow-align-center,
+.jstour-popup-arrow-side-right.jstour-popup-arrow-align-center {
   top: 50%;
   margin-top: -5px;
 }
 
-.tourjs-popup-arrow-side-bottom.tourjs-popup-arrow-align-center,
-.tourjs-popup-arrow-side-top.tourjs-popup-arrow-align-center {
+.jstour-popup-arrow-side-bottom.jstour-popup-arrow-align-center,
+.jstour-popup-arrow-side-top.jstour-popup-arrow-align-center {
   left: 50%;
   margin-left: -5px;
 }
 
-.tourjs-popup-arrow-side-over.tourjs-popup-arrow-align-over {
+.jstour-popup-arrow-side-over.jstour-popup-arrow-align-over {
   display: none;
 }
 
-.tourjs-d-none {
+.jstour-d-none {
   display: none;
 }
 
-.tourjs-popup-title {
+.jstour-popup-title {
   font-size: 18px;
   font-weight: 700;
   display: block;
@@ -183,7 +183,7 @@
   border-radius: 5px 5px 0 0;
 }
 
-.tourjs-popup-description {
+.jstour-popup-description {
   margin-bottom: 0;
   font-size: 14px;
   line-height: 1.5;
@@ -193,8 +193,8 @@
   padding: 10px;
 }
 
-.tourjs-hint,
-.tourjs-announcement {
+.jstour-hint,
+.jstour-announcement {
   position: absolute;
   background-color: #fff;
   box-shadow: 0 0 17px rgba(0, 0, 0, 0.24);
@@ -206,8 +206,8 @@
   animation-duration: 0.2s;
 }
 
-.tourjs-hint-backdrop,
-.tourjs-announcement-backdrop {
+.jstour-hint-backdrop,
+.jstour-announcement-backdrop {
   background-color: transparent;
   position: fixed;
   top: 0;

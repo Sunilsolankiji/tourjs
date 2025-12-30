@@ -288,7 +288,7 @@ git commit -m "docs: update README with new examples"
 #### `style` - Code Style
 
 ```bash
-git commit -m "style: fix indentation in tourjs.js"
+git commit -m "style: fix indentation in jstour.js"
 ```
 
 **Not in changelog** (style-only changes)
@@ -426,7 +426,7 @@ npm install
 git checkout -b feature/new-animation
 
 # 3. Make changes
-# - Edit tourjs.js
+# - Edit jstour.js
 
 # 4. Check code quality (optional, happens on commit anyway)
 npm run lint:fix

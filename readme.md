@@ -1,8 +1,8 @@
-# tourjs - Interactive Website Tours
+# jstour - Interactive Website Tours
 
 A lightweight, dependency-free JavaScript library to create engaging website tours and interactive walkthroughs for your users.
 
-[![npm version](https://badge.fury.io/js/tourjs.svg)](https://badge.fury.io/js/tourjs)
+[![npm version](https://badge.fury.io/js/jstour.svg)](https://badge.fury.io/js/jstour)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## Features
@@ -20,14 +20,14 @@ A lightweight, dependency-free JavaScript library to create engaging website tou
 ### NPM
 
 ```bash
-npm install tourjs
+npm install jstour
 ```
 
 ### Direct Include
 
 ```html
-<link rel="stylesheet" href="tourjs.css" />
-<script src="tourjs.js"></script>
+<link rel="stylesheet" href="jstour.css" />
+<script src="jstour.js"></script>
 ```
 
 ## Quick Start
