@@ -15,7 +15,7 @@
  * ========================================================= */
 
 (function (global) {
-  class tourjs {
+  class jstour {
     constructor(options, templates) {
       this.initializeOptions(options);
       this.initializeTemplate(templates);
@@ -126,13 +126,13 @@
 
       const hintEle = document.createElement('div');
       const hintBackdrop = document.createElement('div');
-      hintBackdrop.classList.add(`tourjs-${popupType}-backdrop`);
+      hintBackdrop.classList.add(`jstour-${popupType}-backdrop`);
       hintBackdrop.addEventListener('click', () => {
         hintEle.remove();
         hintBackdrop.remove();
       });
       hintEle.innerHTML = hint.innerHTML;
-      hintEle.classList.add(`tourjs-${popupType}`);
+      hintEle.classList.add(`jstour-${popupType}`);
 
       let dimentions;
       if (!isAnnouncement) {
@@ -158,9 +158,9 @@
 
     removeHint(isAnnouncement = false) {
       const popupType = isAnnouncement ? 'announcement' : 'hint';
-      const oldHint = document.querySelectorAll(`.tourjs-${popupType}`);
+      const oldHint = document.querySelectorAll(`.jstour-${popupType}`);
       const oldHintBackdrop = document.querySelectorAll(
-        `.tourjs-${popupType}-backdrop`
+        `.jstour-${popupType}-backdrop`
       );
 
       Array.from(oldHint).forEach((hint) => hint.remove());
@@ -191,50 +191,50 @@
 
     createPopup() {
       const wrapper = document.createElement('div');
-      wrapper.classList.add('tourjs-popup');
+      wrapper.classList.add('jstour-popup');
       if (this.getOption('popupClass')) {
         wrapper.classList.add(this.getOption('popupClass').trim());
       }
 
       const arrow = document.createElement('div');
-      arrow.classList.add('tourjs-popup-arrow');
+      arrow.classList.add('jstour-popup-arrow');
 
       const title = document.createElement('header');
-      title.id = 'tourjs-popup-title';
-      title.classList.add('tourjs-popup-title');
+      title.id = 'jstour-popup-title';
+      title.classList.add('jstour-popup-title');
       title.style.display = 'none';
       title.innerText = 'Popup Title';
 
       const description = document.createElement('div');
-      description.id = 'tourjs-popup-description';
-      description.classList.add('tourjs-popup-description');
+      description.id = 'jstour-popup-description';
+      description.classList.add('jstour-popup-description');
       description.style.display = 'none';
       description.innerText = 'Popup description is here';
 
       const closeButton = document.createElement('button');
       closeButton.type = 'button';
-      closeButton.classList.add('tourjs-popup-close-btn');
+      closeButton.classList.add('jstour-popup-close-btn');
       closeButton.setAttribute('aria-label', 'Close');
       closeButton.innerHTML = '&times;';
 
       const footer = document.createElement('footer');
-      footer.classList.add('tourjs-popup-footer');
+      footer.classList.add('jstour-popup-footer');
 
       const progress = document.createElement('span');
-      progress.classList.add('tourjs-popup-progress-text');
+      progress.classList.add('jstour-popup-progress-text');
       progress.innerText = '';
 
       const footerButtons = document.createElement('span');
-      footerButtons.classList.add('tourjs-popup-navigation-btns');
+      footerButtons.classList.add('jstour-popup-navigation-btns');
 
       const previousButton = document.createElement('button');
       previousButton.type = 'button';
-      previousButton.classList.add('tourjs-popup-prev-btn');
+      previousButton.classList.add('jstour-popup-prev-btn');
       previousButton.innerHTML = '&larr; Previous';
 
       const nextButton = document.createElement('button');
       nextButton.type = 'button';
-      nextButton.classList.add('tourjs-popup-next-btn');
+      nextButton.classList.add('jstour-popup-next-btn');
       nextButton.innerHTML = 'Next &rarr;';
 
       footerButtons.appendChild(previousButton);
@@ -266,7 +266,7 @@
       const popup = this.createPopup();
       this.options.popup = popup;
 
-      const oldPopups = document.querySelectorAll('.tourjs-popup');
+      const oldPopups = document.querySelectorAll('.jstour-popup');
 
       // remove all old popups
       Array.from(oldPopups).forEach((ele) => {
@@ -410,7 +410,7 @@
       const elementHeight = elementDimensions.height;
 
       // Remove all arrow classes
-      popupArrow.className = 'tourjs-popup-arrow';
+      popupArrow.className = 'jstour-popup-arrow';
 
       let arrowSide = side;
       let arrowAlignment = alignment;
@@ -481,10 +481,10 @@
       }
 
       if (!arrowSide) {
-        popupArrow.classList.add('tourjs-d-none');
+        popupArrow.classList.add('jstour-d-none');
       } else {
-        popupArrow.classList.add(`tourjs-popup-arrow-side-${arrowSide}`);
-        popupArrow.classList.add(`tourjs-popup-arrow-align-${arrowAlignment}`);
+        popupArrow.classList.add(`jstour-popup-arrow-side-${arrowSide}`);
+        popupArrow.classList.add(`jstour-popup-arrow-align-${arrowAlignment}`);
       }
     }
 
@@ -510,7 +510,7 @@
       const windowY = window.innerHeight;
 
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.classList.add('tourjs-overlay', 'tourjs-overlay-animated');
+      svg.classList.add('jstour-overlay', 'jstour-overlay-animated');
 
       svg.setAttribute('viewBox', `0 0 ${windowX} ${windowY}`);
       svg.setAttribute('xmlSpace', 'preserve');
@@ -735,7 +735,7 @@
       if (!noneOptimal) {
         this.renderPopupArrow(requiredAlignment, popupRenderedSide, element);
       } else {
-        popup.arrow.classList.add('tourjs-d-none');
+        popup.arrow.classList.add('jstour-d-none');
       }
     }
 
@@ -845,7 +845,7 @@
 
     destroyTour() {
       const popup = this.options.popup;
-      const overlaySvg = document.querySelector('.tourjs-overlay');
+      const overlaySvg = document.querySelector('.jstour-overlay');
 
       if (popup.wrapper) {
         popup.wrapper.remove();
@@ -1078,7 +1078,7 @@
 
     addDummyElement() {
       const isDummyElement = document.getElementById(
-        'tourjs-popup-dummy-element'
+        'jstour-popup-dummy-element'
       );
       if (isDummyElement) {
         return isDummyElement;
@@ -1086,7 +1086,7 @@
 
       const element = document.createElement('div');
 
-      element.id = 'tourjs-popup-dummy-element';
+      element.id = 'jstour-popup-dummy-element';
       element.style.width = '0';
       element.style.height = '0';
       element.style.pointerEvents = 'none';
@@ -1103,5 +1103,5 @@
     //
   }
 
-  global.tourjs = tourjs;
+  global.jstour = jstour;
 })(this);
