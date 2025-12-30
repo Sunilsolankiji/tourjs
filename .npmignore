@@ -1,0 +1,67 @@
+# .npmignore
+
+# Dependencies
+node_modules/
+
+# Development
+.idea/
+.vscode/
+.git/
+.gitignore
+.husky/
+
+# Testing
+test/
+tests/
+*.test.js
+*.spec.js
+coverage/
+.nyc_output/
+
+# Build
+dist/
+build/
+*.map
+*.tgz
+
+# Documentation
+docs/
+README.original.md
+
+# Configuration files
+.editorconfig
+.prettierrc.json
+.eslintrc.json
+.eslintignore
+.prettierignore
+.versionrc.json
+.gitattributes
+.travis.yml
+
+# Documentation files
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+SECURITY.md
+DEVELOPMENT.md
+DEVELOPMENT_SETUP.md
+TOOLS_SETUP_COMPLETE.md
+FILE_INDEX.md
+VERIFICATION_COMPLETE.md
+FINAL_SUMMARY.md
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# System files
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Legacy files (source moved to src/)
+tourjs.js
+tourjs.css

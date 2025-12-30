@@ -1,183 +1,281 @@
-# Tourjs Library Documentation  
-  
+# tourjs - Interactive Website Tours
 
-## Introduction  
-The tourjs JavaScript library empowers developers to craft engaging website tours and walkthroughs for users. These tours serve as valuable tools to user newcomers through a website's features and functionalities, be it a web application or any online platform. With tourjs, creating interactive and user-friendly guides becomes a breeze, allowing you to effortlessly highlight and elucidate different elements on a web page, thereby enhancing the user's comprehension and navigation of the interface.   
-  
+A lightweight, dependency-free JavaScript library to create engaging website tours and interactive walkthroughs for your users.
 
-## Table of Contents 
-- [Installation](#installation)
-- [Getting Started](#getting-started) 
-- [Tour Configuration](#tour-config)
-    
----  
-  
-<a name="installation"></a>
-## Installation   
-  
-To use the Tour Library in your project, follow these steps:   
-  
-  1. Download the library files from our website or repository.  
-  2. Include the library files (tourjs.js and tourjs.css) in your project  
-  3. Link the library files in your HTML file.   
-  4. You're now ready to start using the Tour Library!        
-  
----  
-  
-<a name="getting-started"></a>
-## Getting Started ##
-To create a basic Tour, follow these steps:      
+[![npm version](https://badge.fury.io/js/tourjs.svg)](https://badge.fury.io/js/tourjs)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-**Step 1:** Initialize the Tour Library using JavaScript.  
+## Features
 
-~~~js
-let ztTour = new ztTour(options); 
-~~~  
+- **Lightweight** - No dependencies, pure vanilla JavaScript
+- **Easy to Use** - Simple API for creating tours
+- **Customizable** - Extensive configuration options
+- **Responsive** - Works on all screen sizes
+- **Keyboard Navigation** - Full keyboard support
+- **Smooth Animations** - Beautiful transition effects
+- **Accessibility** - WCAG compliant
 
-**Step 2:** Define all your configuration.   
+## Installation
 
+### NPM
 
-**Step 3:** start the tour by calling the appropriate function.   
+```bash
+npm install tourjs
+```
 
-~~~js
-ztTour.start(); 
-~~~   
+### Direct Include
 
-**Note:** Customize the tour's appearance and behavior as needed.   
+```html
+<link rel="stylesheet" href="tourjs.css" />
+<script src="tourjs.js"></script>
+```
 
-[Live demo](https://zehntech.github.io/zt-gantt/)      
+## Quick Start
 
-**Complete Documentation:** [ztTour Documentation](./docs/Tour-Library-Documentation.pdf)  
-  
-  ---  
-  
-<a name="tour-config"></a>
-## 3. Tour Configuration     
+### Basic Usage
 
-  ~~~js
-  
-  let options = { 
-// Opacity of the backdrop. (default: 0.7) 
-          overlayOpacity?: number, 
+```javascript
+const tour = new ztTour({
+  steps: [
+    {
+      element: '.welcome',
+      popup: {
+        title: 'Welcome',
+        description: 'Welcome to our website!',
+        side: 'bottom',
+        align: 'start',
+      },
+    },
+    {
+      element: '.features',
+      popup: {
+        title: 'Our Features',
+        description: 'Check out our amazing features',
+        side: 'top',
+        align: 'center',
+      },
+    },
+  ],
+});
 
-// Distance between the highlighted element and the cutout. (default: 10) 
-          stagePadding?: number, 
+tour.start();
+```
 
-// Distance between the popover and the highlighted element. (default: 10) 
-          popupOffset?: number, 
+## Configuration
 
-// Radius of the cutout around the highlighted element. (default: 5) 
-          stageRadius?: number, 
+### Tour Options
 
-// Overlay color. (default: black) 
-          overlayColor?: string, 
+```javascript
+{
+  // Array of steps to display in the tour
+  steps: [],
 
-// Whether to animate the product tour. (default: true) 
-          animate?: boolean, 
+  // Opacity of the overlay backdrop (0-1)
+  overlayOpacity: 0.7,
 
-// Whether to smooth scroll to the highlighted element. (default: false) 
-          smoothScroll?: boolean, 
+  // Distance between element and cutout in pixels
+  stagePadding: 10,
 
-// Whether to allow closing the popover by clicking on the backdrop. (default: true) 
-          allowBackdropClose?: boolean, 
+  // Distance between popup and element in pixels
+  popupOffset: 10,
 
-// If you want to add custom class to the popover 
-          popupClass?: string, 
+  // Border radius of the cutout around element
+  stageRadius: 5,
 
-// Whether to allow keyboard navigation. (default: true) 
-          keyboardControl?: boolean, 
+  // Color of the overlay
+  overlayColor: '#000',
 
-// Whether to show the progress text in popover. (default: false) 
-          showProgress?: boolean, 
+  // Enable/disable animations
+  animate: true,
 
-// Array of buttons to show in the popover. Defaults to ["next", "previous", "close"] 
-          VisibleButtons?: [], 
+  // Smooth scroll to highlighted element
+  smoothScroll: false,
 
-// Array of buttons to disable. Default to [] 
-          disableButtons: [], 
+  // Allow closing by clicking backdrop
+  allowBackdropClose: true,
 
-// Duration of the animation. (default: 400) 
-          animationDuration?: number, 
+  // Custom CSS class for popup
+  popupClass: '',
 
-//Text of the next button. Default ("Next &rarr;") 
-        nextBtnText?:string, 
+  // Enable/disable keyboard navigation (ESC to close, arrows to navigate)
+  keyboardControl: true,
 
-//Text of the previous button. Default ("&larr; Previous") 
-        prevBtnText?:string, 
+  // Show progress counter (e.g., "1 / 5")
+  showProgress: false,
 
-//Text of the done button. Default ("Done") 
-        DoneBtnText?:string, 
+  // Array of visible buttons: 'next', 'previous', 'close'
+  VisibleButtons: ['next', 'previous', 'close'],
 
-//function trigered when clicked on next button 
-          onNextClick: (step)=>{ 
-            console.log(step, " Next Click"); 
-          }, 
+  // Array of disabled buttons
+  disableButtons: [],
 
-//function trigered when clicked on close button 
-          onClose: ()=>{ 
-            console.log("Tour Closed"); 
-          }, 
+  // Animation duration in milliseconds
+  animationDuration: 400,
 
-//function trigered when clicked on previous button 
-          onPreviousClick: (step)=>{ 
-            console.log(step, " Previous Click"); 
-          }, 
+  // Button text
+  nextBtnText: 'Next →',
+  prevBtnText: '← Previous',
+  DoneBtnText: 'Done',
 
-    //example steps for the tour 
-          steps: [ 
-            { 
-              element: ".collapse-container", 
-              popup: { 
-                title: "Toggle Collapse", 
-                description: "Toggle all the tree!!", 
-                side: "bottom", 
-                align: "start", 
-              }, 
-            }, 
-            { 
-              element: ".export-data", 
-              popup: { 
-                title: "Export Chart", 
-                description: "Export the gantt chart in pdf, png and excel.", 
-                side: "bottom", 
-                align: "center", 
-              }, 
-            }, 
-            { 
-              element: ".fullscreen", 
-              popup: { 
-                title: "Fullscreen", 
-                description: "View the gantt chart in fullscreen mode.", 
-                side: "bottom", 
-                align: "end", 
-              }, 
-            }, 
-            { 
-              element: "#ZT-Gantt", 
-              popup: { 
-                title: "tourjs", 
-                description: "Gantt Chart", 
-                side: "top", 
-                align: "start", 
-              }, 
-            }, 
+  // Callbacks
+  onNextClick: (step) => {},
+  onPreviousClick: (step) => {},
+  onClose: () => {}
+}
+```
 
-//for showing the popup only without highlighting any element 
-            { 
-              popup: { 
-                title: "That's everything", 
-                description: `<div class="finish"> 
-                  <p>Looks like you're ready to go 🎉</p> 
-                  <p>Click anywhere to exit the tour.</p> 
-                  <img src="https://media.tenor.com/y2JXkY1pXkwAAAAM/cat-computer.gif"> 
-                  </div>`, 
-                side: "over", 
-                align: "over", 
-              }, 
-            }, 
-          ], 
-        }; 
+### Step Configuration
 
-  ~~~
-    
-  ---
+```javascript
+{
+  // CSS selector for the element to highlight
+  element: '.my-element',
+
+  // Popup configuration
+  popup: {
+    title: 'Step Title',
+    description: 'Step description text',
+
+    // Position: 'top', 'bottom', 'left', 'right', 'over'
+    side: 'bottom',
+
+    // Alignment: 'start', 'center', 'end'
+    align: 'center'
+  }
+}
+```
+
+## Methods
+
+### Start the tour
+
+```javascript
+tour.start();
+```
+
+### Go to specific step
+
+```javascript
+tour.goToStep(2);
+```
+
+### Go to next step
+
+```javascript
+tour.nextStep();
+```
+
+### Go to previous step
+
+```javascript
+tour.previousStep();
+```
+
+### End the tour
+
+```javascript
+tour.end();
+```
+
+## Examples
+
+### Complete Example
+
+```javascript
+const tourOptions = {
+  steps: [
+    {
+      element: '.header',
+      popup: {
+        title: 'Welcome to Our Site',
+        description: 'This is our header with navigation',
+        side: 'bottom',
+        align: 'start',
+      },
+    },
+    {
+      element: '.search-bar',
+      popup: {
+        title: 'Search',
+        description: 'Use the search bar to find content',
+        side: 'bottom',
+        align: 'center',
+      },
+    },
+    {
+      element: '.cta-button',
+      popup: {
+        title: 'Call to Action',
+        description: 'Click here to get started',
+        side: 'top',
+        align: 'end',
+      },
+    },
+    {
+      popup: {
+        title: 'All Done!',
+        description: 'You have completed the tour. Enjoy exploring!',
+        side: 'over',
+        align: 'over',
+      },
+    },
+  ],
+  overlayOpacity: 0.8,
+  showProgress: true,
+  keyboardControl: true,
+  onNextClick: (step) => console.log('Next step:', step),
+  onClose: () => console.log('Tour ended'),
+};
+
+const tour = new ztTour(tourOptions);
+tour.start();
+```
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+- Mobile browsers (iOS Safari, Chrome Mobile)
+
+## API Reference
+
+See [Tour Library Documentation](./docs/Tour-Library-Documentation.pdf) for detailed API documentation.
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## Code of Conduct
+
+Please read our [Code of Conduct](CODE_OF_CONDUCT.md) to understand our community standards.
+
+## License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+Created by [Sunil Solanki](https://github.com/Sunilsolankiji)
+
+## Support
+
+For issues, feature requests, or questions, please open an issue on [GitHub](https://github.com/Sunilsolankiji/tourjs/issues).
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history and updates.
+
+## Roadmap
+
+- [ ] TypeScript definitions
+- [ ] React component wrapper
+- [ ] Vue component wrapper
+- [ ] Unit tests
+- [ ] E2E tests
+- [ ] Performance optimizations
+
+---
+
+Made with ❤️ by Sunil Solanki
