@@ -43,13 +43,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run npm audit
-        run: npm audit --production || true
-
       - name: Setup Node.js for security check
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit
+        run: npm audit --production || true
 
       - name: Check for vulnerable dependencies
         run: npm ls
