@@ -1,10 +1,16 @@
-.zt-tour-popup * {
-  font-family: Helvetica Neue, Inter, ui-sans-serif, "Apple Color Emoji",
-    Helvetica, Arial, sans-serif;
-    color: #000;
+.tourjs-popup * {
+  font-family:
+    Helvetica Neue,
+    Inter,
+    ui-sans-serif,
+    'Apple Color Emoji',
+    Helvetica,
+    Arial,
+    sans-serif;
+  color: #000;
 }
 
-.zt-tour-popup {
+.tourjs-popup {
   all: unset;
   box-sizing: border-box;
   color: #2d2d2d;
@@ -20,7 +26,7 @@
   background-color: #fff;
 }
 
-.zt-tour-popup-close-btn {
+.tourjs-popup-close-btn {
   all: unset;
   position: absolute;
   top: 5px;
@@ -37,18 +43,18 @@
   z-index: 1;
 }
 
-.zt-tour-popup-close-btn:hover {
+.tourjs-popup-close-btn:hover {
   color: #000;
 }
 
-.zt-tour-popup-description {
+.tourjs-popup-description {
   margin-bottom: 0;
   font-size: 14px;
   font-weight: 400;
   padding: 5px;
 }
 
-.zt-tour-popup-footer {
+.tourjs-popup-footer {
   margin-top: 15px;
   text-align: right;
   zoom: 1;
@@ -58,13 +64,13 @@
   padding: 10px;
 }
 
-.zt-tour-popup-navigation-btns {
+.tourjs-popup-navigation-btns {
   display: flex;
   flex-grow: 1;
   justify-content: flex-end;
 }
 
-.zt-tour-popup-footer button {
+.tourjs-popup-footer button {
   font-size: 12px;
   cursor: pointer;
   padding: 10px 20px;
@@ -77,118 +83,118 @@
   margin-left: 10px;
 }
 
-.zt-tour-popup-footer button:hover {
+.tourjs-popup-footer button:hover {
   background-color: #3585e0f2;
 }
 
-.zt-tour-popup-footer button:disabled {
+.tourjs-popup-footer button:disabled {
   opacity: 0.5;
   pointer-events: none;
 }
 
-.zt-tour-popup-footer .zt-tour-popup-btn-disabled {
+.tourjs-popup-footer .tourjs-popup-btn-disabled {
   opacity: 0.5;
   pointer-events: none;
 }
 
-.zt-tour-popup-arrow {
-    content: "";
-    position: absolute;
-    border: 5px solid #408BE1;
+.tourjs-popup-arrow {
+  content: '';
+  position: absolute;
+  border: 5px solid #408be1;
 }
 
-.zt-tour-popup-arrow-side-left {
+.tourjs-popup-arrow-side-left {
   left: 100%;
   border-right-color: transparent;
   border-bottom-color: transparent;
   border-top-color: transparent;
 }
 
-.zt-tour-popup-arrow-side-right {
+.tourjs-popup-arrow-side-right {
   right: 100%;
   border-left-color: transparent;
   border-bottom-color: transparent;
   border-top-color: transparent;
 }
 
-.zt-tour-popup-arrow-side-top {
+.tourjs-popup-arrow-side-top {
   top: 100%;
   border-right-color: transparent;
   border-bottom-color: transparent;
   border-left-color: transparent;
 }
 
-.zt-tour-popup-arrow-side-bottom {
+.tourjs-popup-arrow-side-bottom {
   bottom: 100%;
   border-left-color: transparent;
   border-top-color: transparent;
   border-right-color: transparent;
 }
 
-.zt-tour-popup-arrow-side-left.zt-tour-popup-arrow-align-start,
-.zt-tour-popup-arrow-side-right.zt-tour-popup-arrow-align-start {
+.tourjs-popup-arrow-side-left.tourjs-popup-arrow-align-start,
+.tourjs-popup-arrow-side-right.tourjs-popup-arrow-align-start {
   top: 15px;
 }
 
-.zt-tour-popup-arrow-side-bottom.zt-tour-popup-arrow-align-start,
-.zt-tour-popup-arrow-side-top.zt-tour-popup-arrow-align-start {
+.tourjs-popup-arrow-side-bottom.tourjs-popup-arrow-align-start,
+.tourjs-popup-arrow-side-top.tourjs-popup-arrow-align-start {
   left: 15px;
 }
 
-.zt-tour-popup-arrow-align-end.zt-tour-popup-arrow-side-left,
-.zt-tour-popup-arrow-align-end.zt-tour-popup-arrow-side-right {
+.tourjs-popup-arrow-align-end.tourjs-popup-arrow-side-left,
+.tourjs-popup-arrow-align-end.tourjs-popup-arrow-side-right {
   bottom: 15px;
 }
 
-.zt-tour-popup-arrow-side-bottom.zt-tour-popup-arrow-align-end,
-.zt-tour-popup-arrow-side-top.zt-tour-popup-arrow-align-end {
+.tourjs-popup-arrow-side-bottom.tourjs-popup-arrow-align-end,
+.tourjs-popup-arrow-side-top.tourjs-popup-arrow-align-end {
   right: 15px;
 }
 
-.zt-tour-popup-arrow-side-left.zt-tour-popup-arrow-align-center,
-.zt-tour-popup-arrow-side-right.zt-tour-popup-arrow-align-center {
+.tourjs-popup-arrow-side-left.tourjs-popup-arrow-align-center,
+.tourjs-popup-arrow-side-right.tourjs-popup-arrow-align-center {
   top: 50%;
   margin-top: -5px;
 }
 
-.zt-tour-popup-arrow-side-bottom.zt-tour-popup-arrow-align-center,
-.zt-tour-popup-arrow-side-top.zt-tour-popup-arrow-align-center {
+.tourjs-popup-arrow-side-bottom.tourjs-popup-arrow-align-center,
+.tourjs-popup-arrow-side-top.tourjs-popup-arrow-align-center {
   left: 50%;
   margin-left: -5px;
 }
 
-.zt-tour-popup-arrow-side-over.zt-tour-popup-arrow-align-over{
+.tourjs-popup-arrow-side-over.tourjs-popup-arrow-align-over {
   display: none;
 }
 
-.zt-tour-d-none{
-    display: none;
+.tourjs-d-none {
+  display: none;
 }
 
-.zt-tour-popup-title {
+.tourjs-popup-title {
   font-size: 18px;
   font-weight: 700;
   display: block;
   position: relative;
   margin: 0;
   padding: 10px;
-  background-color: #408BE1;
+  background-color: #408be1;
   color: #fff;
   border-radius: 5px 5px 0 0;
 }
 
-.zt-tour-popup-description {
-    margin-bottom: 0;
-    font-size: 14px;
-    line-height: 1.5;
-    font-weight: 400;
-    zoom: 1;
-    color: #000;
-    padding: 10px;
+.tourjs-popup-description {
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+  zoom: 1;
+  color: #000;
+  padding: 10px;
 }
 
-.zt-tour-hint,
-.zt-tour-announcement {
+.tourjs-hint,
+.tourjs-announcement {
   position: absolute;
   background-color: #fff;
   box-shadow: 0 0 17px rgba(0, 0, 0, 0.24);
@@ -200,8 +206,8 @@
   animation-duration: 0.2s;
 }
 
-.zt-tour-hint-backdrop,
-.zt-tour-announcement-backdrop {
+.tourjs-hint-backdrop,
+.tourjs-announcement-backdrop {
   background-color: transparent;
   position: fixed;
   top: 0;

@@ -15,7 +15,7 @@
  * ========================================================= */
 
 (function (global) {
-  class ztTour {
+  class tourjs {
     constructor(options, templates) {
       this.initializeOptions(options);
       this.initializeTemplate(templates);
@@ -47,18 +47,20 @@
         stagePadding: opt.stagePadding || 10,
         popupOffset: opt.popupOffset || 10,
         stageRadius: opt.stageRadius || 5,
-        overlayColor: opt.overlayColor || "#000",
+        overlayColor: opt.overlayColor || '#000',
         animate: opt.animate !== undefined ? opt.animate : true,
         smoothScroll: opt.smoothScroll || false,
-        visibleButtons: opt.visibleButtons || ["next", "previous", "close"],
+        visibleButtons: opt.visibleButtons || ['next', 'previous', 'close'],
         disableButtons: opt.disableButtons || [],
         showProgress: opt.showProgress || false,
-        nextBtnText: opt.nextBtnText || "Next &rarr;",
-        prevBtnText: opt.prevBtnText || "&larr; Previous",
-        doneBtnText: opt.doneBtnText || "Done",
-        allowBackdropClose: opt.allowBackdropClose !== undefined ? opt.allowBackdropClose : true,
+        nextBtnText: opt.nextBtnText || 'Next &rarr;',
+        prevBtnText: opt.prevBtnText || '&larr; Previous',
+        doneBtnText: opt.doneBtnText || 'Done',
+        allowBackdropClose:
+          opt.allowBackdropClose !== undefined ? opt.allowBackdropClose : true,
         popupClass: opt.popupClass || false,
-        keyboardControl: opt.keyboardControl !== undefined ? opt.keyboardControl : true,
+        keyboardControl:
+          opt.keyboardControl !== undefined ? opt.keyboardControl : true,
         animationDuration: opt.animationDuration || 400,
       };
     }
@@ -74,28 +76,28 @@
     }
 
     initEvents() {
-      window.addEventListener("keyup", this.onKeyUp, false);
-      window.addEventListener("resize", this.refreshStep, false);
-      window.addEventListener("scroll", this.refreshStep, false);
+      window.addEventListener('keyup', this.onKeyUp, false);
+      window.addEventListener('resize', this.refreshStep, false);
+      window.addEventListener('scroll', this.refreshStep, false);
     }
 
     onKeyUp(e) {
-      const keyboardControl = this.getOption("keyboardControl");
+      const keyboardControl = this.getOption('keyboardControl');
       if (keyboardControl) {
-        if (e.key === "Escape") {
+        if (e.key === 'Escape') {
           this.destroyTour();
-        } else if (e.key === "ArrowRight") {
-          this.highlightStep(this.getOption("currentStep") + 1);
-        } else if (e.key === "ArrowLeft") {
-          this.highlightStep(this.getOption("currentStep") - 1);
+        } else if (e.key === 'ArrowRight') {
+          this.highlightStep(this.getOption('currentStep') + 1);
+        } else if (e.key === 'ArrowLeft') {
+          this.highlightStep(this.getOption('currentStep') - 1);
         }
       }
     }
 
     destroyEvents() {
-      window.removeEventListener("keyup", this.onKeyUp);
-      window.removeEventListener("resize", this.refreshStep);
-      window.removeEventListener("scroll", this.refreshStep);
+      window.removeEventListener('keyup', this.onKeyUp);
+      window.removeEventListener('resize', this.refreshStep);
+      window.removeEventListener('scroll', this.refreshStep);
     }
 
     getOption(key) {
@@ -117,60 +119,67 @@
       this.highlightStep(0);
     }
 
-    showHint(hint, isAnnouncement = false){
+    showHint(hint, isAnnouncement = false) {
       this.removeHint(isAnnouncement);
 
-      let popupType = isAnnouncement ? "announcement" : "hint";
+      const popupType = isAnnouncement ? 'announcement' : 'hint';
 
-      let hintEle = document.createElement("div");
-      let hintBackdrop = document.createElement("div");
-      hintBackdrop.classList.add(`zt-tour-${popupType}-backdrop`);
-      hintBackdrop.addEventListener('click',()=>{
+      const hintEle = document.createElement('div');
+      const hintBackdrop = document.createElement('div');
+      hintBackdrop.classList.add(`tourjs-${popupType}-backdrop`);
+      hintBackdrop.addEventListener('click', () => {
         hintEle.remove();
         hintBackdrop.remove();
-      })
+      });
       hintEle.innerHTML = hint.innerHTML;
-      hintEle.classList.add(`zt-tour-${popupType}`);
+      hintEle.classList.add(`tourjs-${popupType}`);
 
       let dimentions;
-      if(!isAnnouncement){
-        dimentions = document.querySelector(hint.element).getBoundingClientRect();
-      } 
-      
+      if (!isAnnouncement) {
+        dimentions = document
+          .querySelector(hint.element)
+          .getBoundingClientRect();
+      }
+
       document.body.appendChild(hintBackdrop);
       document.body.appendChild(hintEle);
-      
 
-      hintEle.style.top = isAnnouncement ? "50%" : dimentions.top + dimentions.height + 10 + "px";
-      hintEle.style.left = isAnnouncement ? "50%" : dimentions.left + 10 + "px";
-      hintEle.style.transform = isAnnouncement ? "translate(-50%, -50%)" : "";
+      hintEle.style.top = isAnnouncement
+        ? '50%'
+        : dimentions.top + dimentions.height + 10 + 'px';
+      hintEle.style.left = isAnnouncement ? '50%' : dimentions.left + 10 + 'px';
+      hintEle.style.transform = isAnnouncement ? 'translate(-50%, -50%)' : '';
     }
 
-    showAnnouncement(announcement){
-      announcement = {innerHTML: announcement};
+    showAnnouncement(announcement) {
+      announcement = { innerHTML: announcement };
       this.showHint(announcement, true);
     }
 
-    removeHint(isAnnouncement = false){
-      let popupType = isAnnouncement ? "announcement" : "hint";
-      let oldHint = document.querySelectorAll(`.zt-tour-${popupType}`);
-      let oldHintBackdrop = document.querySelectorAll(`.zt-tour-${popupType}-backdrop`);
+    removeHint(isAnnouncement = false) {
+      const popupType = isAnnouncement ? 'announcement' : 'hint';
+      const oldHint = document.querySelectorAll(`.tourjs-${popupType}`);
+      const oldHintBackdrop = document.querySelectorAll(
+        `.tourjs-${popupType}-backdrop`
+      );
 
-      Array.from(oldHint).forEach((hint)=>hint.remove())
-      Array.from(oldHintBackdrop).forEach((hintBackdrop)=>hintBackdrop.remove())
+      Array.from(oldHint).forEach((hint) => hint.remove());
+      Array.from(oldHintBackdrop).forEach((hintBackdrop) =>
+        hintBackdrop.remove()
+      );
     }
 
-    removeAnnouncement(){
+    removeAnnouncement() {
       removeHint(true);
     }
 
     highlightStep(currentStep) {
-      if (0 > currentStep || currentStep > this.getOption("steps").length - 1) {
+      if (0 > currentStep || currentStep > this.getOption('steps').length - 1) {
         this.destroyTour();
         return;
       }
 
-      let step = this.options.steps[currentStep];
+      const step = this.options.steps[currentStep];
       let element = document.querySelector(step?.element);
 
       if (!element) {
@@ -181,52 +190,52 @@
     }
 
     createPopup() {
-      const wrapper = document.createElement("div");
-      wrapper.classList.add("zt-tour-popup");
-      if (this.getOption("popupClass")) {
-        wrapper.classList.add(this.getOption("popupClass").trim());
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('tourjs-popup');
+      if (this.getOption('popupClass')) {
+        wrapper.classList.add(this.getOption('popupClass').trim());
       }
 
-      const arrow = document.createElement("div");
-      arrow.classList.add("zt-tour-popup-arrow");
+      const arrow = document.createElement('div');
+      arrow.classList.add('tourjs-popup-arrow');
 
-      const title = document.createElement("header");
-      title.id = "zt-tour-popup-title";
-      title.classList.add("zt-tour-popup-title");
-      title.style.display = "none";
-      title.innerText = "Popup Title";
+      const title = document.createElement('header');
+      title.id = 'tourjs-popup-title';
+      title.classList.add('tourjs-popup-title');
+      title.style.display = 'none';
+      title.innerText = 'Popup Title';
 
-      const description = document.createElement("div");
-      description.id = "zt-tour-popup-description";
-      description.classList.add("zt-tour-popup-description");
-      description.style.display = "none";
-      description.innerText = "Popup description is here";
+      const description = document.createElement('div');
+      description.id = 'tourjs-popup-description';
+      description.classList.add('tourjs-popup-description');
+      description.style.display = 'none';
+      description.innerText = 'Popup description is here';
 
-      const closeButton = document.createElement("button");
-      closeButton.type = "button";
-      closeButton.classList.add("zt-tour-popup-close-btn");
-      closeButton.setAttribute("aria-label", "Close");
-      closeButton.innerHTML = "&times;";
+      const closeButton = document.createElement('button');
+      closeButton.type = 'button';
+      closeButton.classList.add('tourjs-popup-close-btn');
+      closeButton.setAttribute('aria-label', 'Close');
+      closeButton.innerHTML = '&times;';
 
-      const footer = document.createElement("footer");
-      footer.classList.add("zt-tour-popup-footer");
+      const footer = document.createElement('footer');
+      footer.classList.add('tourjs-popup-footer');
 
-      const progress = document.createElement("span");
-      progress.classList.add("zt-tour-popup-progress-text");
-      progress.innerText = "";
+      const progress = document.createElement('span');
+      progress.classList.add('tourjs-popup-progress-text');
+      progress.innerText = '';
 
-      const footerButtons = document.createElement("span");
-      footerButtons.classList.add("zt-tour-popup-navigation-btns");
+      const footerButtons = document.createElement('span');
+      footerButtons.classList.add('tourjs-popup-navigation-btns');
 
-      const previousButton = document.createElement("button");
-      previousButton.type = "button";
-      previousButton.classList.add("zt-tour-popup-prev-btn");
-      previousButton.innerHTML = "&larr; Previous";
+      const previousButton = document.createElement('button');
+      previousButton.type = 'button';
+      previousButton.classList.add('tourjs-popup-prev-btn');
+      previousButton.innerHTML = '&larr; Previous';
 
-      const nextButton = document.createElement("button");
-      nextButton.type = "button";
-      nextButton.classList.add("zt-tour-popup-next-btn");
-      nextButton.innerHTML = "Next &rarr;";
+      const nextButton = document.createElement('button');
+      nextButton.type = 'button';
+      nextButton.classList.add('tourjs-popup-next-btn');
+      nextButton.innerHTML = 'Next &rarr;';
 
       footerButtons.appendChild(previousButton);
       footerButtons.appendChild(nextButton);
@@ -254,10 +263,10 @@
     }
 
     renderPopup(element, step) {
-      let popup = this.createPopup();
+      const popup = this.createPopup();
       this.options.popup = popup;
 
-      let oldPopups = document.querySelectorAll(".zt-tour-popup");
+      const oldPopups = document.querySelectorAll('.tourjs-popup');
 
       // remove all old popups
       Array.from(oldPopups).forEach((ele) => {
@@ -294,81 +303,81 @@
 
       if (title) {
         popup.title.innerHTML = title;
-        popup.title.style.display = "block";
+        popup.title.style.display = 'block';
       } else {
-        popup.title.style.display = "none";
+        popup.title.style.display = 'none';
       }
 
       if (description) {
         popup.description.innerHTML = description;
-        popup.description.style.display = "block";
+        popup.description.style.display = 'block';
       } else {
-        popup.description.style.display = "none";
+        popup.description.style.display = 'none';
       }
 
       const showButtonsOption =
-        visibleButtons || this.getOption("visibleButtons");
-      const isShowProgress = showProgress || this.getOption("showProgress");
+        visibleButtons || this.getOption('visibleButtons');
+      const isShowProgress = showProgress || this.getOption('showProgress');
 
       const isShowFooter =
-        showButtonsOption.includes("next") ||
-        showButtonsOption?.includes("previous") ||
+        showButtonsOption.includes('next') ||
+        showButtonsOption?.includes('previous') ||
         isShowProgress;
 
-      popup.closeButton.style.display = showButtonsOption.includes("close")
-        ? "block"
-        : "none";
+      popup.closeButton.style.display = showButtonsOption.includes('close')
+        ? 'block'
+        : 'none';
 
       if (isShowFooter) {
-        popup.footer.style.display = "flex";
+        popup.footer.style.display = 'flex';
 
-        popup.progress.style.display = isShowProgress ? "block" : "none";
-        popup.nextButton.style.display = showButtonsOption.includes("next")
-          ? "block"
-          : "none";
+        popup.progress.style.display = isShowProgress ? 'block' : 'none';
+        popup.nextButton.style.display = showButtonsOption.includes('next')
+          ? 'block'
+          : 'none';
         popup.previousButton.style.display = showButtonsOption.includes(
-          "previous"
+          'previous'
         )
-          ? "block"
-          : "none";
+          ? 'block'
+          : 'none';
       } else {
-        popup.footer.style.display = "none";
+        popup.footer.style.display = 'none';
       }
 
       const disabledButtonsOption =
-        disableButtons || this.getOption("disableButtons");
-      if (disabledButtonsOption?.includes("next")) {
+        disableButtons || this.getOption('disableButtons');
+      if (disabledButtonsOption?.includes('next')) {
         popup.nextButton.disabled = true;
       }
 
-      if (disabledButtonsOption?.includes("previous")) {
+      if (disabledButtonsOption?.includes('previous')) {
         popup.previousButton.disabled = true;
       }
 
-      if (disabledButtonsOption?.includes("close")) {
+      if (disabledButtonsOption?.includes('close')) {
         popup.closeButton.disabled = true;
       }
 
-      popup.nextButton.addEventListener("click", () => {
-        let isOutOfIndex =
+      popup.nextButton.addEventListener('click', () => {
+        const isOutOfIndex =
           this.options.currentStep + 1 < 0 ||
-          this.options.currentStep + 1 >= this.getOption("steps").length;
+          this.options.currentStep + 1 >= this.getOption('steps').length;
         this.highlightStep(this.options.currentStep + 1);
-        if (typeof this.onNextClick === "function" && !isOutOfIndex) {
+        if (typeof this.onNextClick === 'function' && !isOutOfIndex) {
           this.onNextClick(this.options.currentStep);
         }
       });
 
-      popup.previousButton.addEventListener("click", () => {
+      popup.previousButton.addEventListener('click', () => {
         this.highlightStep(this.options.currentStep - 1);
-        if (typeof this.onPreviousClick === "function") {
+        if (typeof this.onPreviousClick === 'function') {
           this.onPreviousClick(this.options.currentStep);
         }
       });
 
-      popup.closeButton.addEventListener("click", () => {
+      popup.closeButton.addEventListener('click', () => {
         this.destroyTour();
-        if (typeof this.onClose === "function") {
+        if (typeof this.onClose === 'function') {
           this.onClose();
         }
       });
@@ -377,12 +386,12 @@
     }
 
     hidePopup() {
-      const popup = this.getOption("popup");
+      const popup = this.getOption('popup');
       if (!popup) {
         return;
       }
 
-      popup.wrapper.style.display = "none";
+      popup.wrapper.style.display = 'none';
     }
 
     renderPopupArrow(alignment, side, element) {
@@ -401,81 +410,81 @@
       const elementHeight = elementDimensions.height;
 
       // Remove all arrow classes
-      popupArrow.className = "zt-tour-popup-arrow";
+      popupArrow.className = 'tourjs-popup-arrow';
 
       let arrowSide = side;
       let arrowAlignment = alignment;
 
-      if (side === "top") {
+      if (side === 'top') {
         if (elementLeft + elementWidth <= 0) {
-          arrowSide = "right";
-          arrowAlignment = "end";
+          arrowSide = 'right';
+          arrowAlignment = 'end';
         } else if (elementLeft + elementWidth - popupWidth <= 0) {
-          arrowSide = "top";
-          arrowAlignment = "start";
+          arrowSide = 'top';
+          arrowAlignment = 'start';
         }
         if (elementLeft >= windowWidth) {
-          arrowSide = "left";
-          arrowAlignment = "end";
+          arrowSide = 'left';
+          arrowAlignment = 'end';
         } else if (elementLeft + popupWidth >= windowWidth) {
-          arrowSide = "top";
-          arrowAlignment = "end";
+          arrowSide = 'top';
+          arrowAlignment = 'end';
         }
-      } else if (side === "bottom") {
+      } else if (side === 'bottom') {
         if (elementLeft + elementWidth <= 0) {
-          arrowSide = "right";
-          arrowAlignment = "start";
+          arrowSide = 'right';
+          arrowAlignment = 'start';
         } else if (elementLeft + elementWidth - popupWidth <= 0) {
-          arrowSide = "bottom";
-          arrowAlignment = "start";
+          arrowSide = 'bottom';
+          arrowAlignment = 'start';
         }
         if (elementLeft >= windowWidth) {
-          arrowSide = "left";
-          arrowAlignment = "start";
+          arrowSide = 'left';
+          arrowAlignment = 'start';
         } else if (elementLeft + popupWidth >= windowWidth) {
-          arrowSide = "bottom";
-          arrowAlignment = "end";
+          arrowSide = 'bottom';
+          arrowAlignment = 'end';
         }
-      } else if (side === "left") {
+      } else if (side === 'left') {
         if (elementTop + elementHeight <= 0) {
-          arrowSide = "bottom";
-          arrowAlignment = "end";
+          arrowSide = 'bottom';
+          arrowAlignment = 'end';
         } else if (elementTop + elementHeight - popupHeight <= 0) {
-          arrowSide = "left";
-          arrowAlignment = "start";
+          arrowSide = 'left';
+          arrowAlignment = 'start';
         }
 
         if (elementTop >= windowHeight) {
-          arrowSide = "top";
-          arrowAlignment = "end";
+          arrowSide = 'top';
+          arrowAlignment = 'end';
         } else if (elementTop + popupHeight >= windowHeight) {
-          arrowSide = "left";
-          arrowAlignment = "end";
+          arrowSide = 'left';
+          arrowAlignment = 'end';
         }
-      } else if (side === "right") {
+      } else if (side === 'right') {
         if (elementTop + elementHeight <= 0) {
-          arrowSide = "bottom";
-          arrowAlignment = "start";
+          arrowSide = 'bottom';
+          arrowAlignment = 'start';
         } else if (elementTop + elementHeight - popupHeight <= 0) {
-          arrowSide = "right";
-          arrowAlignment = "start";
+          arrowSide = 'right';
+          arrowAlignment = 'start';
         }
 
         if (elementTop >= windowHeight) {
-          arrowSide = "top";
-          arrowAlignment = "start";
+          arrowSide = 'top';
+          arrowAlignment = 'start';
         } else if (elementTop + popupHeight >= windowHeight) {
-          arrowSide = "right";
-          arrowAlignment = "end";
+          arrowSide = 'right';
+          arrowAlignment = 'end';
         }
       } else {
       }
 
       if (!arrowSide) {
-        popupArrow.classList.add("zt-tour-d-none");
+        popupArrow.classList.add('tourjs-d-none');
       } else {
-        popupArrow.classList.add(`zt-tour-popup-arrow-side-${arrowSide}`);
-        popupArrow.classList.add(`zt-tour-popup-arrow-align-${arrowAlignment}`);
+        popupArrow.classList.add(`tourjs-popup-arrow-side-${arrowSide}`);
+        popupArrow.classList.add(`tourjs-popup-arrow-align-${arrowAlignment}`);
       }
     }
 
@@ -500,42 +509,42 @@
       const windowX = window.innerWidth;
       const windowY = window.innerHeight;
 
-      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      svg.classList.add("zt-tour-overlay", "zt-tour-overlay-animated");
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.classList.add('tourjs-overlay', 'tourjs-overlay-animated');
 
-      svg.setAttribute("viewBox", `0 0 ${windowX} ${windowY}`);
-      svg.setAttribute("xmlSpace", "preserve");
-      svg.setAttribute("xmlnsXlink", "http://www.w3.org/1999/xlink");
-      svg.setAttribute("version", "1.1");
-      svg.setAttribute("preserveAspectRatio", "xMinYMin slice");
+      svg.setAttribute('viewBox', `0 0 ${windowX} ${windowY}`);
+      svg.setAttribute('xmlSpace', 'preserve');
+      svg.setAttribute('xmlnsXlink', 'http://www.w3.org/1999/xlink');
+      svg.setAttribute('version', '1.1');
+      svg.setAttribute('preserveAspectRatio', 'xMinYMin slice');
 
-      svg.style.fillRule = "evenodd";
-      svg.style.clipRule = "evenodd";
-      svg.style.strokeLinejoin = "round";
-      svg.style.strokeMiterlimit = "2";
-      svg.style.zIndex = "10000";
-      svg.style.position = "fixed";
-      svg.style.top = "0";
-      svg.style.left = "0";
-      svg.style.width = "100%";
-      svg.style.height = "100%";
+      svg.style.fillRule = 'evenodd';
+      svg.style.clipRule = 'evenodd';
+      svg.style.strokeLinejoin = 'round';
+      svg.style.strokeMiterlimit = '2';
+      svg.style.zIndex = '10000';
+      svg.style.position = 'fixed';
+      svg.style.top = '0';
+      svg.style.left = '0';
+      svg.style.width = '100%';
+      svg.style.height = '100%';
 
       const stagePath = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "path"
+        'http://www.w3.org/2000/svg',
+        'path'
       );
 
-      stagePath.setAttribute("d", this.generateStageSvgPathString(stage));
+      stagePath.setAttribute('d', this.generateStageSvgPathString(stage));
 
-      stagePath.style.fill = this.options.overlayColor || "rgb(0,0,0)";
+      stagePath.style.fill = this.options.overlayColor || 'rgb(0,0,0)';
       stagePath.style.opacity = `${this.options.overlayOpacity}`;
-      stagePath.style.pointerEvents = "auto";
-      stagePath.style.cursor = "auto";
+      stagePath.style.pointerEvents = 'auto';
+      stagePath.style.cursor = 'auto';
 
-      svg.addEventListener("click", () => {
-        if (this.getOption("allowBackdropClose")) {
+      svg.addEventListener('click', () => {
+        if (this.getOption('allowBackdropClose')) {
           this.destroyTour();
-          if (typeof this.onClose === "function") {
+          if (typeof this.onClose === 'function') {
             this.onClose();
           }
         }
@@ -578,10 +587,10 @@
 
     repositionPopup(element, step) {
       const popup = this.options.popup;
-      let { align = "start", side = "left" } = step?.popup || {};
+      let { align = 'start', side = 'left' } = step?.popup || {};
 
-      align = step.element ? align : "over";
-      side = step.element ? side : "over";
+      align = step.element ? align : 'over';
+      side = step.element ? side : 'over';
 
       // Configure the popup positioning
       const requiredAlignment = align;
@@ -611,34 +620,34 @@
         !isTopOptimal && !isBottomOptimal && !isLeftOptimal && !isRightOptimal;
       let popupRenderedSide = requiredSide;
 
-      if (requiredSide === "top" && isTopOptimal) {
+      if (requiredSide === 'top' && isTopOptimal) {
         isRightOptimal = isLeftOptimal = isBottomOptimal = false;
-      } else if (requiredSide === "bottom" && isBottomOptimal) {
+      } else if (requiredSide === 'bottom' && isBottomOptimal) {
         isRightOptimal = isLeftOptimal = isTopOptimal = false;
-      } else if (requiredSide === "left" && isLeftOptimal) {
+      } else if (requiredSide === 'left' && isLeftOptimal) {
         isRightOptimal = isTopOptimal = isBottomOptimal = false;
-      } else if (requiredSide === "right" && isRightOptimal) {
+      } else if (requiredSide === 'right' && isRightOptimal) {
         isLeftOptimal = isTopOptimal = isBottomOptimal = false;
       }
 
-      if (requiredSide === "over") {
+      if (requiredSide === 'over') {
         const leftToSet = window.innerWidth / 2 - popupDimensions.realWidth / 2;
         const topToSet =
           window.innerHeight / 2 - popupDimensions.realHeight / 2;
 
         popup.wrapper.style.left = `${leftToSet}px`;
-        popup.wrapper.style.right = `auto`;
+        popup.wrapper.style.right = 'auto';
         popup.wrapper.style.top = `${topToSet}px`;
-        popup.wrapper.style.bottom = `auto`;
+        popup.wrapper.style.bottom = 'auto';
       } else if (noneOptimal) {
         const leftValue =
           window.innerWidth / 2 - popupDimensions?.realWidth / 2;
         const bottomValue = 10;
 
         popup.wrapper.style.left = `${leftValue}px`;
-        popup.wrapper.style.right = `auto`;
+        popup.wrapper.style.right = 'auto';
         popup.wrapper.style.bottom = `${bottomValue}px`;
-        popup.wrapper.style.top = `auto`;
+        popup.wrapper.style.top = 'auto';
       } else if (isLeftOptimal) {
         const leftToSet = Math.min(
           leftValue,
@@ -656,10 +665,10 @@
 
         popup.wrapper.style.left = `${leftToSet}px`;
         popup.wrapper.style.top = `${topToSet}px`;
-        popup.wrapper.style.bottom = `auto`;
-        popup.wrapper.style.right = "auto";
+        popup.wrapper.style.bottom = 'auto';
+        popup.wrapper.style.right = 'auto';
 
-        popupRenderedSide = "left";
+        popupRenderedSide = 'left';
       } else if (isRightOptimal) {
         const rightToSet = Math.min(
           rightValue,
@@ -676,10 +685,10 @@
 
         popup.wrapper.style.right = `${rightToSet}px`;
         popup.wrapper.style.top = `${topToSet}px`;
-        popup.wrapper.style.bottom = `auto`;
-        popup.wrapper.style.left = "auto";
+        popup.wrapper.style.bottom = 'auto';
+        popup.wrapper.style.left = 'auto';
 
-        popupRenderedSide = "right";
+        popupRenderedSide = 'right';
       } else if (isTopOptimal) {
         const topToSet = Math.min(
           topValue,
@@ -687,7 +696,7 @@
             popupDimensions.realHeight -
             popupArrowDimensions.width
         );
-        let leftToSet = this.calculateLeftForTopBottom(requiredAlignment, {
+        const leftToSet = this.calculateLeftForTopBottom(requiredAlignment, {
           elementDimensions,
           popupDimensions,
           popupPadding,
@@ -696,10 +705,10 @@
 
         popup.wrapper.style.top = `${topToSet}px`;
         popup.wrapper.style.left = `${leftToSet}px`;
-        popup.wrapper.style.bottom = `auto`;
-        popup.wrapper.style.right = "auto";
+        popup.wrapper.style.bottom = 'auto';
+        popup.wrapper.style.right = 'auto';
 
-        popupRenderedSide = "top";
+        popupRenderedSide = 'top';
       } else if (isBottomOptimal) {
         const bottomToSet = Math.min(
           bottomValue,
@@ -708,7 +717,7 @@
             popupArrowDimensions.width
         );
 
-        let leftToSet = this.calculateLeftForTopBottom(requiredAlignment, {
+        const leftToSet = this.calculateLeftForTopBottom(requiredAlignment, {
           elementDimensions,
           popupDimensions,
           popupPadding,
@@ -717,16 +726,16 @@
 
         popup.wrapper.style.left = `${leftToSet}px`;
         popup.wrapper.style.bottom = `${bottomToSet}px`;
-        popup.wrapper.style.top = `auto`;
-        popup.wrapper.style.right = "auto";
+        popup.wrapper.style.top = 'auto';
+        popup.wrapper.style.right = 'auto';
 
-        popupRenderedSide = "bottom";
+        popupRenderedSide = 'bottom';
       }
 
       if (!noneOptimal) {
         this.renderPopupArrow(requiredAlignment, popupRenderedSide, element);
       } else {
-        popup.arrow.classList.add("zt-tour-d-none");
+        popup.arrow.classList.add('tourjs-d-none');
       }
     }
 
@@ -738,7 +747,7 @@
         popupArrowDimensions,
       } = config;
 
-      if (alignment === "start") {
+      if (alignment === 'start') {
         return Math.max(
           Math.min(
             elementDimensions.left - popupPadding,
@@ -750,7 +759,7 @@
         );
       }
 
-      if (alignment === "end") {
+      if (alignment === 'end') {
         return Math.max(
           Math.min(
             elementDimensions.left -
@@ -765,7 +774,7 @@
         );
       }
 
-      if (alignment === "center") {
+      if (alignment === 'center') {
         return Math.max(
           Math.min(
             elementDimensions.left +
@@ -790,7 +799,7 @@
         popupArrowDimensions,
       } = config;
 
-      if (alignment === "start") {
+      if (alignment === 'start') {
         return Math.max(
           Math.min(
             elementDimensions.top - popupPadding,
@@ -802,7 +811,7 @@
         );
       }
 
-      if (alignment === "end") {
+      if (alignment === 'end') {
         return Math.max(
           Math.min(
             elementDimensions.top -
@@ -817,7 +826,7 @@
         );
       }
 
-      if (alignment === "center") {
+      if (alignment === 'center') {
         return Math.max(
           Math.min(
             elementDimensions.top +
@@ -835,8 +844,8 @@
     }
 
     destroyTour() {
-      let popup = this.options.popup;
-      const overlaySvg = document.querySelector(".zt-tour-overlay");
+      const popup = this.options.popup;
+      const overlaySvg = document.querySelector('.tourjs-overlay');
 
       if (popup.wrapper) {
         popup.wrapper.remove();
@@ -851,7 +860,7 @@
     }
 
     transitionStage(timeDiff, duration, from, to) {
-      let activeStagePosition = this.getOption("activeStagePosition");
+      let activeStagePosition = this.getOption('activeStagePosition');
 
       const fromDefinition = activeStagePosition
         ? activeStagePosition
@@ -891,30 +900,30 @@
       };
 
       this.renderOverlay(activeStagePosition);
-      this.setOption("activeStagePosition", activeStagePosition);
+      this.setOption('activeStagePosition', activeStagePosition);
     }
 
     renderOverlay(stagePosition) {
-      const overlaySvg = this.getOption("overlaySvg");
+      const overlaySvg = this.getOption('overlaySvg');
       if (!overlaySvg) {
         this.addOverlay(stagePosition);
         return;
       }
 
       const pathElement = overlaySvg.firstElementChild;
-      if (pathElement?.tagName !== "path") {
-        throw new Error("no path element found in stage svg");
+      if (pathElement?.tagName !== 'path') {
+        throw new Error('no path element found in stage svg');
       }
 
       pathElement.setAttribute(
-        "d",
+        'd',
         this.generateStageSvgPathString(stagePosition)
       );
     }
 
     changeHighlight(toElement, toStep, toStepIndex) {
-      const duration = this.getOption("animationDuration");
-      let currentStepEle =
+      const duration = this.getOption('animationDuration');
+      const currentStepEle =
         this.options.steps[this.options.currentStep]?.element;
 
       const start = Date.now();
@@ -925,14 +934,14 @@
 
       const isFirstHighlight = !fromElement || fromElement === toElement;
 
-      const isAnimatedTour = this.getOption("animate");
+      const isAnimatedTour = this.getOption('animate');
 
       const hasDelayedPopup = !isFirstHighlight && isAnimatedTour;
       let isPopupRendered = false;
 
       this.hidePopup();
 
-      this.setOption("currentStep", toStepIndex);
+      this.setOption('currentStep', toStepIndex);
 
       const animate = () => {
         const timeDiff = Date.now() - start;
@@ -948,12 +957,12 @@
           isPopupRendered = true;
         }
 
-        if (this.getOption("animate") && timeDiff < duration) {
+        if (this.getOption('animate') && timeDiff < duration) {
           this.transitionStage(timeDiff, duration, fromElement, toElement);
         } else {
           this.trackActiveElement(toElement);
         }
-        if (timeRemaining >= 0 && this.getOption("animate")) {
+        if (timeRemaining >= 0 && this.getOption('animate')) {
           window.requestAnimationFrame(animate);
         }
       };
@@ -971,15 +980,15 @@
         return;
       }
 
-      const shouldSmoothScroll = this.getOption("smoothScroll");
+      const shouldSmoothScroll = this.getOption('smoothScroll');
 
       element.scrollIntoView({
         behavior:
           !shouldSmoothScroll || this.isScrollableParent(element)
-            ? "auto"
-            : "smooth",
-        inline: "center",
-        block: "center",
+            ? 'auto'
+            : 'smooth',
+        inline: 'center',
+        block: 'center',
       });
     }
 
@@ -1018,7 +1027,7 @@
         height: definition.height,
       };
 
-      this.setOption("activeStagePosition", activeStagePosition);
+      this.setOption('activeStagePosition', activeStagePosition);
 
       this.renderOverlay(activeStagePosition);
     }
@@ -1027,7 +1036,7 @@
       const overlaySvg = this.createOverlaySvg(stagePosition);
       document.body.appendChild(overlaySvg);
 
-      this.setOption("overlaySvg", overlaySvg);
+      this.setOption('overlaySvg', overlaySvg);
     }
 
     easeInOutQuad(timeDiff, initialValue, amountOfChange, duration) {
@@ -1040,27 +1049,27 @@
     }
 
     refreshOverlay() {
-      const activeStagePosition = this.getOption("activeStagePosition");
-      const overlaySvg = this.getOption("overlaySvg");
+      const activeStagePosition = this.getOption('activeStagePosition');
+      const overlaySvg = this.getOption('overlaySvg');
 
       if (!activeStagePosition) {
         return;
       }
 
       if (!overlaySvg) {
-        console.warn("No svg found.");
+        console.warn('No svg found.');
         return;
       }
 
       const windowX = window.innerWidth;
       const windowY = window.innerHeight;
 
-      overlaySvg.setAttribute("viewBox", `0 0 ${windowX} ${windowY}`);
+      overlaySvg.setAttribute('viewBox', `0 0 ${windowX} ${windowY}`);
     }
 
     refreshStep() {
-      const currentStep = this.getOption("currentStep");
-      const step = this.getOption("steps")[currentStep];
+      const currentStep = this.getOption('currentStep');
+      const step = this.getOption('steps')[currentStep];
       const element = document.querySelector(step.element);
       this.trackActiveElement(element);
       this.refreshOverlay();
@@ -1068,28 +1077,31 @@
     }
 
     addDummyElement() {
-      const isDummyElement = document.getElementById("zt-popup-dummy-element");
+      const isDummyElement = document.getElementById(
+        'tourjs-popup-dummy-element'
+      );
       if (isDummyElement) {
         return isDummyElement;
       }
 
-      let element = document.createElement("div");
+      const element = document.createElement('div');
 
-      element.id = "zt-popup-dummy-element";
-      element.style.width = "0";
-      element.style.height = "0";
-      element.style.pointerEvents = "none";
-      element.style.opacity = "0";
-      element.style.position = "fixed";
-      element.style.top = "50%";
-      element.style.left = "50%";
+      element.id = 'tourjs-popup-dummy-element';
+      element.style.width = '0';
+      element.style.height = '0';
+      element.style.pointerEvents = 'none';
+      element.style.opacity = '0';
+      element.style.position = 'fixed';
+      element.style.top = '50%';
+      element.style.left = '50%';
 
       document.body.appendChild(element);
 
       return element;
     }
+
     //
   }
 
-  global.ztTour = ztTour;
+  global.tourjs = tourjs;
 })(this);

@@ -2,6 +2,11 @@
 
 # IDEs and editors
 .idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
 
 # Visual Studio Code
 .vscode/*
@@ -11,7 +16,42 @@
 !.vscode/extensions.json
 .history/*
 
-# System files
+# npm/yarn
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Build
+dist/
+build/
+*.tgz
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS files
 .DS_Store
 Thumbs.db
-.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+
+# Misc
+.cache/
+temp/
+tmp/
+
