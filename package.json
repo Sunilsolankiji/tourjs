@@ -1,6 +1,6 @@
 {
   "name": "tourjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight, dependency-free JavaScript library to create engaging website tours and interactive walkthroughs",
   "main": "src/tourjs.js",
   "files": [
